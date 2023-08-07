@@ -95,6 +95,12 @@ def gen_parquet(filename, columns, id, name, value1, value2, date):
     # Parquetに出力する
     df.to_parquet(filename)
 
+# 出力先のディレクトリを作成する
+def make_output_dir():
+    import os
+    if not os.path.exists('output'):
+        os.mkdir('output')
+
 # main関数
 def main():
     # カラム名を定義する
@@ -108,6 +114,9 @@ def main():
     value1 = gen_number_arr(rows)
     value2 = gen_number_arr(rows)
     date = gen_date_arr(rows)
+
+    # 出力先のディレクトリを作成する
+    make_output_dir()
 
     # 各形式で出力する
     gen_csv('output/dummy.csv', columns, id, name, value1, value2, date)
