@@ -1,7 +1,7 @@
 import random
 import string
 import pandas as pd
-import pyarrow.parquet as pq
+import pyarrow.parquet as pq # type:ignore
 
 # ランダム文字列の配列を生成する関数
 def gen_string_arr(rows):
