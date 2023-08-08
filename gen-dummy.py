@@ -89,11 +89,11 @@ def gen_dataframe(columns, id, name, value1, value2, date):
     return df
 
 # 各カラムを結合してParquetに出力する関数
-def gen_parquet(filename, columns, id, name, value1, value2, date):
+def gen_parquet(filename, columns, id, name, value1, value2, date, compression=None):
     # DataFrameを生成する
     df = gen_dataframe(columns, id, name, value1, value2, date)
     # Parquetに出力する
-    df.to_parquet(filename)
+    df.to_parquet(filename, compression=compression)
 
 # 出力先のディレクトリを作成する
 def make_output_dir():
@@ -122,6 +122,7 @@ def main():
     gen_csv('output/dummy.csv', columns, id, name, value1, value2, date)
     gen_tsv('output/dummy.tsv', columns, id, name, value1, value2, date)
     gen_parquet('output/dummy.parquet', columns, id, name, value1, value2, date)
+    gen_parquet('output/dummy.gz.parquet', columns, id, name, value1, value2, date, compression='gzip')
 
 # テスト用のmain関数
 def test():
@@ -131,6 +132,8 @@ def test():
     df = pd.read_csv('output/dummy.tsv', sep='\t')
     print(df.head(10))
     df = pd.read_parquet('output/dummy.parquet')
+    print(df.head(10))
+    df = pd.read_parquet('output/dummy.gz.parquet')
     print(df.head(10))
 
 # main関数を実行する
